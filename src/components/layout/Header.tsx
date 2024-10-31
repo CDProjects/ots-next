@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,13 +13,10 @@ const Header = () => {
     const handleResize = () => {
       setIsLandscape(window.innerWidth > window.innerHeight);
     };
-
     // Initial check
     handleResize();
-
     // Add event listener
     window.addEventListener('resize', handleResize);
-
     // Cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -38,21 +38,21 @@ const Header = () => {
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
-            <a href="/" className="text-xl font-bold lg:text-2xl">
+            <Link href="/" className="text-xl font-bold lg:text-2xl">
               Rugby Club
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-6 xl:space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="hover:text-slate-300 transition-colors duration-200 text-sm xl:text-base whitespace-nowrap"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -75,18 +75,20 @@ const Header = () => {
         {/* Mobile/Tablet Navigation */}
         {isMenuOpen && (
           <div className="lg:hidden py-2">
-            <div className={`flex flex-col space-y-1 pb-3 ${
-              isLandscape ? 'max-h-[calc(100vh-4rem)] overflow-y-auto' : ''
-            }`}>
+            <div 
+              className={`flex flex-col space-y-1 pb-3 ${
+                isLandscape ? 'max-h-[calc(100vh-4rem)] overflow-y-auto' : ''
+              }`}
+            >
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   className="block px-3 py-2 rounded-md hover:bg-slate-800 transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
