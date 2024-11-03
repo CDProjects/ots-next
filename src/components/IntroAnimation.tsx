@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const IntroAnimation = ({ onAnimationComplete }) => {
+// Define the props interface
+interface IntroAnimationProps {
+  onAnimationComplete?: () => void;
+}
+
+const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) => {
   const [animationStage, setAnimationStage] = useState(0);
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const IntroAnimation = ({ onAnimationComplete }) => {
           }`}>
             <div className="relative w-full h-full">
               <Image
-                src="/images/feel-the-green.png" // Update this path to match your public folder structure
+                src="/images/feel-the-green.png"
                 alt="Feel The Green"
                 layout="fill"
                 objectFit="contain"
@@ -48,7 +53,6 @@ const IntroAnimation = ({ onAnimationComplete }) => {
           </div>
         </div>
       </div>
-
       {/* Main content fade in */}
       {animationStage >= 2 && (
         <div className="animate-fadeIn">
