@@ -16,12 +16,12 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) 
     setMounted(true);
     
     const timers = [
-      setTimeout(() => setAnimationStage(1), 2000), // Light pan complete
-      setTimeout(() => setAnimationStage(2), 4000), // Fade to black
+      setTimeout(() => setAnimationStage(1), 2000),
+      setTimeout(() => setAnimationStage(2), 4000),
       setTimeout(() => {
         setAnimationStage(3);
         onAnimationComplete?.();
-      }, 5000) // Show main content
+      }, 5000)
     ];
 
     return () => timers.forEach(clearTimeout);
@@ -34,18 +34,24 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) 
       <div className={`relative h-full w-full flex items-center justify-center
         ${animationStage >= 2 ? 'animate-fadeOut' : ''}`}
       >
-        <div className="relative w-full max-w-2xl aspect-video overflow-hidden">
-          <div className={`relative w-full h-full ${
+        <div className="relative overflow-hidden">
+          <div className={`relative ${
             animationStage === 0 ? 'animate-lightPan' : ''
           }`}>
-            <div className="relative w-full h-full">
+            {/* Container for maintaining aspect ratio */}
+            <div className="relative">
               <Image
-                src="/images/feel-the-green.png"
+                src="/images/feel-the-green.jpeg"
                 alt="Feel The Green"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-contain"
+                width={1920}  // We'll adjust these values based on your original image dimensions
+                height={1080} // We'll adjust these values based on your original image dimensions
+                quality={100} // Maximum quality
                 priority
+                className="object-contain"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
             {/* Light pan overlay */}
@@ -58,7 +64,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) 
 
       {animationStage >= 2 && (
         <div className="animate-fadeIn">
-          {/* Main content placeholder - you can replace this with your actual content */}
+          {/* Main content placeholder */}
           <div className="text-white p-4">
             Your main content will appear here
           </div>
