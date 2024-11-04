@@ -1,28 +1,21 @@
-// src/app/layout.tsx
-import { Inter } from 'next/font/google'
-import Header from '@/components/layout/Header'
-import './globals.css'
+// app/layout.tsx
+import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Rugby Club',
-  description: 'Your rugby club description',
-}
+  title: 'Old Town Shamrocks',
+  description: 'Rugby Club website',
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-1">
-          {children}
-        </main>
-      </body>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
     </html>
-  )
+  );
 }

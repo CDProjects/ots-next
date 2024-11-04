@@ -1,39 +1,40 @@
+// src/components/IntroAnimation.tsx
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-// Define the props interface
 interface IntroAnimationProps {
   onAnimationComplete?: () => void;
 }
 
 const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) => {
-  const [animationStage, setAnimationStage] = useState(0);
+  const [animationStage, setAnimationStage] = useState<number>(0);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    // Sequence the animations
-    const timer1 = setTimeout(() => setAnimationStage(1), 2000); // After light pan
-    const timer2 = setTimeout(() => setAnimationStage(2), 4000); // After fade to black
-    const timer3 = setTimeout(() => {
-      setAnimationStage(3);
-      onAnimationComplete?.();
-    }, 5000); // Begin showing main content
+    setMounted(true);
+    
+    const timers = [
+      setTimeout(() => setAnimationStage(1), 2000), // Light pan complete
+      setTimeout(() => setAnimationStage(2), 4000), // Fade to black
+      setTimeout(() => {
+        setAnimationStage(3);
+        onAnimationComplete?.();
+      }, 5000) // Show main content
+    ];
 
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-    };
+    return () => timers.forEach(clearTimeout);
   }, [onAnimationComplete]);
+
+  if (!mounted) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black">
-      <div
-        className={`relative h-full w-full flex items-center justify-center
-          ${animationStage >= 2 ? 'animate-fadeOut' : ''}`}
+      <div className={`relative h-full w-full flex items-center justify-center
+        ${animationStage >= 2 ? 'animate-fadeOut' : ''}`}
       >
-        {/* Light pan effect container */}
         <div className="relative w-full max-w-2xl aspect-video overflow-hidden">
-          {/* The image container */}
           <div className={`relative w-full h-full ${
             animationStage === 0 ? 'animate-lightPan' : ''
           }`}>
@@ -41,8 +42,9 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) 
               <Image
                 src="/images/feel-the-green.png"
                 alt="Feel The Green"
-                layout="fill"
-                objectFit="contain"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-contain"
                 priority
               />
             </div>
@@ -53,10 +55,13 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) 
           </div>
         </div>
       </div>
-      {/* Main content fade in */}
+
       {animationStage >= 2 && (
         <div className="animate-fadeIn">
-          {/* Your main content will go here */}
+          {/* Main content placeholder - you can replace this with your actual content */}
+          <div className="text-white p-4">
+            Your main content will appear here
+          </div>
         </div>
       )}
     </div>
