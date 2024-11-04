@@ -6,31 +6,53 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'lightPan': 'lightPan 2s ease-in-out',
-        'lightPanGradient': 'lightPanGradient 2s ease-in-out',
-        'fadeOut': 'fadeOut 1s ease-in-out forwards',
-        'fadeIn': 'fadeIn 1s ease-in-out',
+        'fadeIn': 'fadeIn 2s ease-in-out forwards',
+        'fadeOut': 'fadeOut 2s ease-in-out forwards',
+        'lightPanGradient': 'lightPanGradient 4s ease-in-out forwards',
+        'slideUp': 'slideUp 2s ease-in-out forwards',
       },
       keyframes: {
-        lightPan: {
-          '0%': { opacity: '0' },
-          '25%': { opacity: '1' },
-          '75%': { opacity: '1' },
-          '100%': { opacity: '0' },
-        },
-        lightPanGradient: {
-          '0%': { transform: 'translateX(-100%)', opacity: '0.5' },
-          '100%': { transform: 'translateX(100%)', opacity: '0.5' },
+        fadeIn: {
+          '0%': { 
+            opacity: '0',
+          },
+          '100%': { 
+            opacity: '1',
+          },
         },
         fadeOut: {
-          '0%': { opacity: '1' },
-          '100%': { opacity: '0', visibility: 'hidden' },
+          '0%': { 
+            opacity: '1'
+          },
+          '100%': { 
+            opacity: '0',
+            visibility: 'hidden'
+          },
         },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        lightPanGradient: {
+          '0%': { 
+            transform: 'translateX(-100%)',
+            opacity: '0.7'
+          },
+          '100%': { 
+            transform: 'translateX(100%)',
+            opacity: '0'
+          },
         },
+        slideUp: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
+        }
       },
+      backgroundColor: {
+        'true-black': '#000000',
+      }
     },
   },
   plugins: [],
