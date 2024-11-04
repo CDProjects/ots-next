@@ -30,40 +30,46 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onAnimationComplete }) 
   if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
-      <div className={`relative h-full w-full flex items-center justify-center
+    <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden">
+      {/* Animation Container */}
+      <div className={`relative w-full h-full flex items-center justify-center
         ${animationStage >= 2 ? 'animate-fadeOut' : ''}`}
       >
-        <div className="relative overflow-hidden">
-          <div className={`relative ${
-            animationStage === 0 ? 'animate-lightPan' : ''
-          }`}>
-            {/* Container for maintaining aspect ratio */}
-            <div className="relative">
+        {/* Image Container with Responsive Sizing */}
+        <div className="relative w-full h-full sm:w-auto sm:h-auto flex items-center justify-center px-4 sm:px-0">
+          <div className={`relative max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw]
+            ${animationStage === 0 ? 'animate-lightPan' : ''}`}
+          >
+            {/* Aspect Ratio Container */}
+            <div className="relative w-full" style={{ aspectRatio: '600/356' }}>
               <Image
                 src="/images/feel-the-green.jpeg"
                 alt="Feel The Green"
-                width={1920}  // We'll adjust these values based on your original image dimensions
-                height={1080} // We'll adjust these values based on your original image dimensions
-                quality={100} // Maximum quality
+                fill
                 priority
+                sizes="(max-width: 640px) 90vw,
+                       (max-width: 768px) 80vw,
+                       (max-width: 1024px) 70vw,
+                       (max-width: 1280px) 60vw,
+                       50vw"
                 className="object-contain"
-                style={{
-                  maxWidth: '100%',
-                  height: 'auto',
-                }}
+                style={{ objectFit: 'contain' }}
+              />
+              
+              {/* Light Pan Overlay */}
+              <div 
+                className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent
+                  opacity-50 pointer-events-none
+                  ${animationStage === 0 ? 'animate-lightPanGradient' : 'opacity-0'}`}
               />
             </div>
-            {/* Light pan overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent
-              ${animationStage === 0 ? 'animate-lightPanGradient' : 'opacity-0'}`}
-            />
           </div>
         </div>
       </div>
 
+      {/* Main Content Fade In */}
       {animationStage >= 2 && (
-        <div className="animate-fadeIn">
+        <div className="absolute inset-0 animate-fadeIn">
           {/* Main content placeholder */}
           <div className="text-white p-4">
             Your main content will appear here

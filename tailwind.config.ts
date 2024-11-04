@@ -19,8 +19,8 @@ module.exports = {
           '100%': { opacity: '0' },
         },
         lightPanGradient: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
+          '0%': { transform: 'translateX(-100%)', opacity: '0.5' },
+          '100%': { transform: 'translateX(100%)', opacity: '0.5' },
         },
         fadeOut: {
           '0%': { opacity: '1' },
